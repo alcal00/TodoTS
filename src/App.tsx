@@ -4,19 +4,20 @@ import { TodoAdd } from './pages/TodoAdd';
 import { TodoList } from './pages/TodoList';
 
 
-const App = () => {
-  interface todo {
-    id: number,
-    title: string,
-    completed: boolean,
-  }
+interface todo {
+  id: number,
+  title: string,
+  completed: boolean,
+}
 
+const App = () => {
+  
   const [todos, setTodos] = useState<todo[]>([])
   const [editTodoId, setEditTodoId] = useState<number | null>(null)
   const [editTodoTitle, setEditTodoTitle] = useState<string>('')
 
   useEffect(() => {
-    fetch('http://localhost:8000/todos', {
+    fetch('https://65c33f8939055e7482c06bc5.mockapi.io/todos', {
       method: 'GET',
     })
       .then((res) => res.json())
@@ -26,7 +27,7 @@ const App = () => {
 
 
   async function handleAddTodo(todo: { title: string }): Promise<void> {
-    const response = await fetch('http://localhost:8000/todos', {
+    const response = await fetch('https://65c33f8939055e7482c06bc5.mockapi.io/todos', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,7 +39,7 @@ const App = () => {
 
   }
   async function handleRemoveTodo(id: number): Promise<void> {
-    await fetch(`http://localhost:8000/todos?id=${id}`, {
+    await fetch(`https://65c33f8939055e7482c06bc5.mockapi.io/todos/${id}`, {
       method: 'DELETE',
     }).then(() => {
       setTodos(todos.filter(todo => todo.id !== id))
@@ -51,7 +52,7 @@ const App = () => {
     if (!todo) {
       return;
     }
-    await fetch(`http://localhost:8000/todos?id=${id}`, {
+    await fetch(`https://65c33f8939055e7482c06bc5.mockapi.io/todos/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -76,7 +77,7 @@ const App = () => {
     } 
   }
   async function fetchSaveTodo(id: number): Promise<void> {
-   await fetch(`http://localhost:8000/todos?id=${id}`, {
+   await fetch(`https://65c33f8939055e7482c06bc5.mockapi.io/todos/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
